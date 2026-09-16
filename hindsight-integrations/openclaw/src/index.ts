@@ -23,6 +23,13 @@ import { mkdirSync } from "fs";
 import { createRequire } from "module";
 import { homedir } from "os";
 import { createKnowledgeTools, TOOL_NAMES } from "@vectorize-io/hindsight-agent-sdk";
+import {
+  applyConfiguredBankDefaults,
+  hasConfiguredBankDefaults,
+  normalizeDispositionTrait,
+  normalizeEntityLabels,
+  normalizeRetainExtractionMode,
+} from "./bank-defaults.js";
 
 /**
  * Structured payload for a knowledge tool result.
@@ -48,13 +55,6 @@ export function knowledgeToolDetails(result: unknown): Record<string, unknown> {
     return {};
   }
 }
-import {
-  applyConfiguredBankDefaults,
-  hasConfiguredBankDefaults,
-  normalizeDispositionTrait,
-  normalizeEntityLabels,
-  normalizeRetainExtractionMode,
-} from "./bank-defaults.js";
 
 function loadPackageVersion(): string {
   try {

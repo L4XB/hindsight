@@ -2437,14 +2437,20 @@ describe("sessionEndMessagesFromTranscript", () => {
 describe("knowledgeToolDetails — Code Mode structured result (#4308)", () => {
   it("parses the SDK's JSON text payload into details", () => {
     const result = {
-      content: [{ type: "text", text: JSON.stringify({ results: [{ id: "m1", text: "fact" }] }, null, 2) }],
+      content: [
+        { type: "text", text: JSON.stringify({ results: [{ id: "m1", text: "fact" }] }, null, 2) },
+      ],
     };
     expect(knowledgeToolDetails(result)).toEqual({ results: [{ id: "m1", text: "fact" }] });
   });
 
   it("wraps a non-object payload so the guest still receives it", () => {
-    expect(knowledgeToolDetails({ content: [{ type: "text", text: "[1,2]" }] })).toEqual({ result: [1, 2] });
-    expect(knowledgeToolDetails({ content: [{ type: "text", text: "\"ok\"" }] })).toEqual({ result: "ok" });
+    expect(knowledgeToolDetails({ content: [{ type: "text", text: "[1,2]" }] })).toEqual({
+      result: [1, 2],
+    });
+    expect(knowledgeToolDetails({ content: [{ type: "text", text: '"ok"' }] })).toEqual({
+      result: "ok",
+    });
   });
 
   it("falls back to an empty object for missing or unparseable text", () => {
